@@ -9,22 +9,18 @@ namespace FSE.Assignment22.Service.Core
         {
             DataConnector.Instance.AddEmployee(employee);
         }
-
         public bool DeleteEmployee(int employeeId)
         {
             return DataConnector.Instance.DeleteEmployee(employeeId);
         }
-
         public List<Employee> RetreiveEmployeeByID(int employeeId)
         {
             return DataConnector.Instance.GetEmployees(employeeId);
         }
-
         public List<Employee> RetreiveEmployees()
         {
             return DataConnector.Instance.GetEmployees();
         }
-
         public void UpdateEmployee(Employee employee)
         {
             DataConnector.Instance.UpdateEmployee(employee);

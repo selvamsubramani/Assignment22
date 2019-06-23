@@ -4,8 +4,6 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FSE.Assignment22.Service.Core.Utility
 {
@@ -53,11 +51,11 @@ namespace FSE.Assignment22.Service.Core.Utility
                     if (parameters != null)
                         command.Parameters.AddRange(parameters);
                     connection.Open();
-                    return command.ExecuteNonQuery();
+                    var result = command.ExecuteNonQuery();
+                    return result;
                 }
             }
         }
-
         public List<Employee> GetEmployees(int? id = null)
         {
             var storedprocedurename = "GetEmployees";
@@ -69,18 +67,16 @@ namespace FSE.Assignment22.Service.Core.Utility
             }
             using (var table = ExecuteTable(storedprocedurename, parameters.ToArray()))
             {
-                return
-                    table.AsEnumerable().Select(row =>
-                    new Employee
-                    {
-                        Id = row.Field<int>("Id"),
-                        Name = row.Field<string>("Name"),
-                        Designation = row.Field<string>("Designation"),
-                        Department = row.Field<string>("Department")
-                    }).ToList();
+                return table.AsEnumerable().Select(row =>
+                new Employee
+                {
+                    Id = row.Field<int>("Id"),
+                    Name = row.Field<string>("Name"),
+                    Designation = row.Field<string>("Designation"),
+                    Department = row.Field<string>("Department")
+                }).ToList();
             }
         }
-
         public void AddEmployee(Employee employee)
         {
             var parameters = new List<SqlParameter>();
@@ -89,14 +85,13 @@ namespace FSE.Assignment22.Service.Core.Utility
             parameters.Add(new SqlParameter("Department", employee.Department));
             ExecuteReader("AddEmployee", parameters.ToArray());
         }
-
         public bool DeleteEmployee(int id)
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("Id", id));
-            return ExecuteReader("DeleteEmployee", parameters.ToArray()) > 0;
+            ExecuteReader("DeleteEmployee", parameters.ToArray());
+            return true;
         }
-
         public void UpdateEmployee(Employee employee)
         {
             var parameters = new List<SqlParameter>();

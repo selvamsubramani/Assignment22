@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Employee";
+}
+<h2>Welcome to Employee Dashboard</h2>
+<hr />
+<div class="container">
+    <table>
+        <tr>
+            <td>
+                @using (Html.BeginForm("Load", "Employee"))
+                {
+                    <div>
+                        <input class="btn btn-primary" type="submit" value="Load All Employees" />
+                    </div>
+                }
+            </td>
+            <td>
+                @using (Html.BeginForm("GetEmployeesById", "Employee", FormMethod.Get))
+                {
+                    <div class="input-group">
+                        <input type="number" id="employeeId" name="employeeId" class="form-control" placeholder="Provide Employee ID">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true">
+                                </span>
+                            </button>
+                        </span>
+                    </div>
+                }
+            </td>
+        </tr>
+    </table>
+    <div>
+        @Html.Partial("Load")
+    </div>
+</div>
